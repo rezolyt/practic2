@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    
+    <section class="container">
+     <div style="margin:20px auto;">   <button class="btn btn-primary">Получить данные</button>
+     </div>
+ <table class="table table-bordered">
+    <thead>
+    <tr>
+         <td>ID</td>
+         <td>title</td>
+         <td>original_language</td>
+         <td> vote_average</td>
+        </tr>
+    </thead>
+    <tbody></tbody>
+    </table>
+  
+</section>
+    <script>      
+    let table = document.querySelector('table>tbody');
+    let button =  document.querySelector('button.btn');
+    button.onclick = function(event) { 
+   fetch('https://api.themoviedb.org/3/movie/now_playing?api_key=e530dbf87d3f35fe1c14ace5c962084a')
+            .then(function(data) {
+                return data.json()
+            })
+            .then(function(data) {
+              
+                let results = data.results;
+                console.log(results)
+               
+
+
+                for ( result in results) {
+                    let tr = document.createElement("tr")
+               
+               
+                    let id = results[result].id;
+                    let title = results[result].title;
+                    let original_language = results[result].original_language;
+                    let vote_average = results[result].vote_average;
+                
+                    let row = table.insertRow(0);
+                    let cell1 = row.insertCell(0);
+                    let cell2 = row.insertCell(1);
+                    let cell3 = row.insertCell(2);
+                    let cell4 = row.insertCell(3);
+                    cell1.innerHTML = id;
+                    cell2.innerHTML = title;
+                    cell3.innerHTML = original_language;
+                    cell4.innerHTML = vote_average;
+                }
+      
+            })
+        };
+
+        </script>
+</body>
+</html>
